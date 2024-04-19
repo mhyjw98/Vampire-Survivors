@@ -82,6 +82,7 @@ public class Enemy : MonoBehaviour
         if (health > 0)
         {
             anim.SetTrigger("Hit");
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
         }
         else
         {
@@ -90,8 +91,12 @@ public class Enemy : MonoBehaviour
             rigid.simulated = false;
             spriter.sortingOrder = 1;
             anim.SetBool("Dead", true);
-            GameManager.instance.kill++;
-            GameManager.instance.GetExp();
+            if (GameManager.instance.isLive)
+            {
+                GameManager.instance.kill++;
+                GameManager.instance.GetExp();
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+            }        
         }
     }
 
@@ -100,7 +105,7 @@ public class Enemy : MonoBehaviour
         yield return wait;
         Vector3 playerPos = GameManager.instance.player.transform.position;
         Vector3 dirVec = transform.position - playerPos;
-        rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
+        rigid.AddForce(dirVec.normalized * 1.5f, ForceMode2D.Impulse);
     }
     void Dead()
     {
