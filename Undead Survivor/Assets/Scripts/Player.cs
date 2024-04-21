@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public Scanner scanner;
     public Hand[] hands;
     public RuntimeAnimatorController[] animCon;
+    public Transform BulletPos;
 
     Rigidbody2D rigid;
     SpriteRenderer spriter;
